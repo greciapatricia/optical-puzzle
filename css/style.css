@@ -1,7 +1,7 @@
 html, body {
     margin: 0;
     padding: 0;
-    background-color: #5dbbd8 ;
+    background-image: url('./img/bg-space.jpg') ;
 }
 h1{
     text-align: center;
