@@ -1,4 +1,15 @@
 html, body {
     margin: 0;
     padding: 0;
-  }
+    background-color: #5dbbd8 ;
+}
+h1{
+    text-align: center;
+}
+#canvas {
+background-color: #fff;
+display:flex;
+justify-content: center;
+align-items: center;
+margin: auto;
+}
