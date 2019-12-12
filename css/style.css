@@ -1,17 +1,19 @@
-html, body {
-    margin: 0;
-    padding: 0;
-    background-image: url('../img/bg-space.jpg');
-    background-size: cover;
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background-image: url("../img/bg-space.jpg");
+  background-size: cover;
 }
-h1{
-    text-align: center;
-    color:#fff;
-}
-#canvas {
-background-color: #fff;
-display:flex;
-justify-content: center;
-align-items: center;
-margin: auto;
+h1 {
+  text-align: center;
+  color: #fff;
+}/*
+#start-button {
+  margin: 0px auto 40px;
+  display: flex;
+}*/
+canvas {
+  display: block;
+  margin: 50px auto;
 }
