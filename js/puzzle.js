@@ -14,6 +14,7 @@ window.requestAnimFrame = (function(){
       var puzzleCanvas = document.getElementById('myCanvas'),
           c = puzzleCanvas.getContext('2d'),
           squares = [],
+          /* posicionesOcupadas = [],? */
           numberOfSquares = 15,
           sqWidth = puzzleCanvas.width/4,
           sqHeight = puzzleCanvas.height/4,
@@ -36,7 +37,8 @@ window.requestAnimFrame = (function(){
                   // First row, tiles 0-3
                   if(i < 4) {
                       squares.push({
-                          imgX: i * sqWidth,
+                          imgX: i /* Aqui podria añadir una variable j que sea el math.random para ordenarlo de forma aleatoria,
+                          un aleatorio entre 0 y 3 - un array vacio de posiciones ocupuadas para verificar que no está */ * sqWidth,
                           imgY: 0
                       });
                   
