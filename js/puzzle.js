@@ -1,178 +1,99 @@
-window.requestAnimFrame = (function(){
-    return  window.requestAnimationFrame       ||
-            window.webkitRequestAnimationFrame ||
-            window.mozRequestAnimationFrame    ||
-            window.oRequestAnimationFrame      ||
-            window.msRequestAnimationFrame     ||
-            function( callback ){
-              window.setTimeout(callback, 1000 / 60);
-            };
-  })();
-  
-  (function(){
-  
-      var puzzleCanvas = document.getElementById('myCanvas'),
-          c = puzzleCanvas.getContext('2d'),
-          squares = [],
-          /* posicionesOcupadas = [],? */
-          numberOfSquares = 15,
-          sqWidth = puzzleCanvas.width/4,
-          sqHeight = puzzleCanvas.height/4,
-          originalWidth = 75,
-          originalHeight = 75,
-          img = new Image(),
-          mouseDown = false,
-          mouseX, mouseY,
-          spaceX = 225, // Initial x and y coordinates of the space
-          spaceY = 225;
-      
-      img.src = 'img/test.jpg';
-  
-      function createSquares() {
-          
-          img.addEventListener("load", function() {	
-              // Add the image squares x & y to the array squares[ ]
-              for( i = 0; i < numberOfSquares; i++ ) {
-                  
-                  // First row, tiles 0-3
-                  if(i < 4) {
-                      squares.push({
-                          imgX: i /* Aqui podria añadir una variable j que sea el math.random para ordenarlo de forma aleatoria,
-                          un aleatorio entre 0 y 3 - un array vacio de posiciones ocupuadas para verificar que no está */ * sqWidth,
-                          imgY: 0
-                      });
-                  
-                  // 2nd row, tiles 4-7	
-                  } else if(i > 3 && i < 8) {
-                      squares.push({
-                          imgX: (i-4) * sqWidth,
-                          imgY: sqHeight
-                      });
-                  
-                  // 3rd row, tiles 8-11		
-                  } else if(i > 7 && i < 12) {
-                      squares.push({
-                          imgX: (i-8) * sqWidth,
-                          imgY: 2 * sqHeight
-                      });
-                  // last row, tiles 12-15
-                  } else {
-                      squares.push({
-                          imgX: (i-12) * sqWidth,
-                          imgY: 3 * sqHeight
-                      });
-                  }
-                  
-                  // Define the x & y to draw
-                  squares[i].drawX = squares[i].imgX;
-                  squares[i].drawY = squares[i].imgY;
-                  
-                  // Draw the tiles - drawImage(x of original, y of original, w of original, h of original, x to draw, y to draw, w to draw, h to draw 
-                  c.drawImage(
-                      img,
-                      squares[i].imgX, squares[i].imgY, originalWidth -2, originalHeight - 2, squares[i].imgX, squares[i].imgY, sqWidth - 2, sqHeight - 2
-                  );
-              }
-          }, false);
-      }
-      
-      puzzleCanvas.addEventListener('mousedown', function(e){
-          mouseDown = true;
-          mouseX = e.pageX - puzzleCanvas.offsetLeft;  // subtract the canvas offset for left and top
-          mouseY = e.pageY - puzzleCanvas.offsetTop;
-      });	
-      
-      function moveSquare(){
-      
-          for(i = 0; i < numberOfSquares; i++){  // Loop through each square to check for the mousedown position
-      
-              if(mouseDown) {
-          
-                  if ( squares[i].drawX < mouseX && (squares[i].drawX + sqWidth) > mouseX && squares[i].drawY < mouseY && (squares[i].drawY + sqHeight) > mouseY ) {
-                      
-                      // Check if there is the space is next to tile
-                      if ( squares[i].drawX == spaceX && ( squares[i].drawY == spaceY - sqHeight || squares[i].drawY == spaceY + sqHeight ) || squares[i].drawY == spaceY && ( squares[i].drawX == spaceX - sqWidth || squares[i].drawX == spaceX + sqWidth ) ) {
-                          
-                          c.clearRect(squares[i].drawX, squares[i].drawY, sqWidth, sqHeight);  // Clear the tile, ie create new space
-                          
-                          newSpaceX = squares[i].drawX;	// Store the position of this new space
-                          newSpaceY = squares[i].drawY;
-                          
-                          squares[i].drawX = spaceX;		// Store the position for where the tile will now be drawn
-                          squares[i].drawY = spaceY;
-                      
-                          spaceX = newSpaceX;				// Reset the x & y for the space
-                          spaceY = newSpaceY;
-                      
-                      }
-                  }
-                  
-                  // Draw the tile in its new position
-                  c.drawImage(
-                      img,
-                      squares[i].imgX, squares[i].imgY, originalWidth -2, originalHeight - 2, squares[i].drawX, squares[i].drawY, sqWidth - 2, sqHeight - 2
-                  );	
-                  
-              }
-          }
-          
-          requestAnimFrame(moveSquare);
-      }
-  
-      createSquares();
-      
-      moveSquare();
-  
-  })();
-  
-/*
-class Game {
-    constructor() {
-      this.canvas = document.getElementById("canvas");
-      this.ctx = this.canvas.getContext("2d");
-      this.width = window.innerWidth;
-      this.height = window.innerHeight;
-      this.fps = 60;
-      this.framesCounter = 0;
-      this.player;
-    }
-  
-    init() {
-      this.canvas.width = this.width;
-      this.canvas.height = this.height;
-  
-      this.start();
-    }
-  
-    start() {
-      this.reset();
-      this.interval = setInterval(() => {
-        this.framesCounter++;
-  
-        this.clear();
-        this.drawAll();
-        this.moveAll();
-        if (this.framesCounter === Math.floor(Math.random()*(150 - 50)) + 50) this.generateObstacles();
-      }, 1000 / this.fps);
-    }
-    reset() {
-      this.background = new Background(this.ctx, this.width, this.height);
-    }
-  
-    clear() {
-      this.ctx.clearRect(0, 0, this.width, this.height);
-    }
-  
-    drawAll() {
-      this.background.draw();
-    }
-  
-    moveAll() {
-      this.background.move();
-    }
-  
-    gameOver() {
-      clearInterval(this.interval);
+var context = document.getElementById('puzzle').getContext('2d');
+
+var img = new Image();
+img.src = './img/puzzle.jpg'; //Cargar la imagen que quiero que se vea
+img.addEventListener('load', drawTiles, false);
+
+var boardSize = document.getElementById('puzzle').width; //Tamaño del tablero
+var tileCount = document.getElementById('scale').value; //Número de cuadrados según la escala (3, 4 o 5)
+
+var tileSize = boardSize / tileCount; //Tamaño de los cuadraditos
+
+var clickLoc = new Object; //Donde se hace click
+clickLoc.x = 0;
+clickLoc.y = 0;
+
+var emptyLoc = new Object; //El cuadrado vacío, siempre en x-0 e y-0 al principio
+emptyLoc.x = 0;
+emptyLoc.y = 0;
+
+var solved = false;
+
+var boardParts; //Se definen y alamacenan las partes del tablero
+setBoard(); //Se llama a la función para establecer las partes del tablero
+
+document.getElementById('scale').onchange = function() { //Dibujar la cantidad de cuadraditos según el valor
+  tileCount = this.value;
+  tileSize = boardSize / tileCount;
+  setBoard();
+  drawTiles();
+};
+
+document.getElementById('puzzle').onclick = function(e) {
+  clickLoc.x = Math.floor((e.pageX - this.offsetLeft) / tileSize); //Organizar de forma aleatoria los cuadraditos cada vez que se carga el juego en el eje x
+  clickLoc.y = Math.floor((e.pageY - this.offsetTop) / tileSize); //Organizar de forma aleatoria los cuadraditos cada vez que se carga el juego en el eje y
+  if (distance(clickLoc.x, clickLoc.y, emptyLoc.x, emptyLoc.y) == 1) { //Distancia del cuadrado al moverse los elementos
+    slideTile(emptyLoc, clickLoc);
+    drawTiles();
+  }
+  if (solved) {
+    setTimeout(function() {alert("You solved it!");}, 500);
+  }
+};
+
+function setBoard() { //Establecer los cuadraditos del tablero
+  boardParts = new Array(tileCount); //Se almacenan las partes del tablero creando un array según el nivel que se elija
+  for (var i = 0; i < tileCount; ++i) {
+    boardParts[i] = new Array(tileCount);
+    for (var j = 0; j < tileCount; ++j) {
+      boardParts[i][j] = new Object;
+      boardParts[i][j].x = (tileCount - 1) - i; 
+      boardParts[i][j].y = (tileCount - 1) - j;
     }
   }
-  */
+  emptyLoc.x = boardParts[tileCount - 1][tileCount - 1].x; //Se establece el espacio vacío
+  emptyLoc.y = boardParts[tileCount - 1][tileCount - 1].y;
+  solved = false;
+}
+
+function drawTiles() { //Dibujar los cuadraditos según el movimiento
+  context.clearRect ( 0 , 0 , boardSize , boardSize ); //Va renderizando
+  for (var i = 0; i < tileCount; ++i) {
+    for (var j = 0; j < tileCount; ++j) {
+      var x = boardParts[i][j].x;
+      var y = boardParts[i][j].y;
+      if(i != emptyLoc.x || j != emptyLoc.y || solved == true) {
+        context.drawImage(img, x * tileSize, y * tileSize, tileSize, tileSize,
+            i * tileSize, j * tileSize, tileSize, tileSize); //Va dibujando los movimientos
+      }
+    }
+  }
+}
+
+function distance(x1, y1, x2, y2) {
+  return Math.abs(x1 - x2) + Math.abs(y1 - y2);
+}
+
+function slideTile(toLoc, fromLoc) {
+  if (!solved) {
+    boardParts[toLoc.x][toLoc.y].x = boardParts[fromLoc.x][fromLoc.y].x;
+    boardParts[toLoc.x][toLoc.y].y = boardParts[fromLoc.x][fromLoc.y].y;
+    boardParts[fromLoc.x][fromLoc.y].x = tileCount - 1;
+    boardParts[fromLoc.x][fromLoc.y].y = tileCount - 1;
+    toLoc.x = fromLoc.x;
+    toLoc.y = fromLoc.y;
+    checkSolved();
+  }
+}
+
+function checkSolved() { 
+  var flag = true;
+  for (var i = 0; i < tileCount; ++i) {
+    for (var j = 0; j < tileCount; ++j) {
+      if (boardParts[i][j].x != i || boardParts[i][j].y != j) {
+        flag = false;
+      }
+    }
+  }
+  solved = flag;
+}

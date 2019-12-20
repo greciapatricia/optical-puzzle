@@ -6,11 +6,23 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Optical puzzle 🤓</title>
     <link rel="stylesheet" href="css/style.css" />
-    
   </head>
   <body>
     <h1>Optical Puzzle 🤓</h1>
-		<canvas width="300" height="300" id="myCanvas"></canvas>
+    <div class="board">
+      <div id="levels">
+        <form>
+          <label>Beginner</label>
+          <input type="range" id="scale" value="3" min="3" max="5" step="1" />
+          <label>Expert</label>
+        </form>
+      </div>
+      <div class="game">
+        <img src="img/puzzle.jpg" width="350px" height="350px">
+        <canvas id="puzzle" width="480px" height="480px"></canvas>
+      </div>
+      
+    </div>
+    <script type="text/javascript" src="js/puzzle.js"></script>
   </body>
-  <script type="text/javascript" src="js/puzzle.js"></script>
 </html>
