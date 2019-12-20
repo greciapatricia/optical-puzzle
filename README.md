@@ -1,8 +1,6 @@
-![Ironhack Logo](https://i.imgur.com/1QgrNNw.png)
+# JS | Optical Puzzle
 
-# JS | FlappyBirds
-
-## Introduction
+## Introducción
 
 ![](https://s3-eu-west-1.amazonaws.com/ih-materials/uploads/upload_6706fdbfdce80220b94fc6c04e2c990d.jpg)
 
