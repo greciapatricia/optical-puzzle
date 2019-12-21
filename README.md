@@ -3,7 +3,7 @@
 ## Introducción
 Optical Puzzle es un juego de agilidad mental basado en el rompecabezas deslizante inventado por Noyes Chapman en 1880.
 
-https://github.com/greciapatricia/optical-puzzle/master/assets/captura-general.png
+<img src="https://github.com/greciapatricia/optical-puzzle/blob/master/img/captura-general.png" width="450px">
 
 ## Objetivo
 El objetivo de este juego es colocar todas las fichas de forma que la imagen que tenemos que consegir, que tiene un efecto óptico, tenga un sentido. En este particular juego, el efecto óptico que produce la imagen es complicado a la hora de ir moviendo las piezas, por esa razón, tenemos en la parte izquierda la imagen final que debemos conseguir.
