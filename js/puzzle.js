@@ -69,7 +69,7 @@ function drawTiles() {
       var x = boardParts[i][j].x;
       var y = boardParts[i][j].y;
       if (i != emptyLoc.x || j != emptyLoc.y || solved == true) {
-        context.drawImage(
+        context.drawImage( //Dibujar la imagen según el tamaño de los cuadrados
           img,
           x * tileSize,
           y * tileSize,
@@ -89,7 +89,7 @@ function distance(x1, y1, x2, y2) {
   return Math.abs(x1 - x2) + Math.abs(y1 - y2);
 }
 
-function slideTile(toLoc, fromLoc) {
+function slideTile(toLoc, fromLoc) {//Deslizar los cuadraditos
   if (!solved) {
     boardParts[toLoc.x][toLoc.y].x = boardParts[fromLoc.x][fromLoc.y].x;
     boardParts[toLoc.x][toLoc.y].y = boardParts[fromLoc.x][fromLoc.y].y;
@@ -101,7 +101,7 @@ function slideTile(toLoc, fromLoc) {
   }
 }
 
-function checkSolved() {
+function checkSolved() {//Verificar si se ha resuelto el puzzle
   var flag = true;
   for (var i = 0; i < tileCount; ++i) {
     for (var j = 0; j < tileCount; ++j) {
