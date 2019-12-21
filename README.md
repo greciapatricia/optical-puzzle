@@ -12,7 +12,7 @@ La única regla del juego es ir moviendo las piezas haciendo click sobre las que
 ## Niveles:
 El juego tiene tres niveles. Podemos elegir el que queramos, desde Beginner hasta Expert
 
-### Nivel Begginer:
+### Nivel Beginner:
 Es un nivel para principiantes donde el tablero se divide en un cuadrado de 3 × 3. La imagen se desordena y obtenemos 8 fichas y 1 espacio en blanco.
 
 ### Nivel Intermediate:
